@@ -12,3 +12,4 @@ A Spring Boot wrapper for Keycloak authorization server
 The following command builds the entire project
 
 `./gradlew clean build`
+
