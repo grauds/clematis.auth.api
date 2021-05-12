@@ -6,7 +6,9 @@ name: CI to Docker Hub
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,13 +21,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
+
       - name: Set up JDK 11 for x64
         uses: actions/setup-java@v1
         with:
           java-version: '11'
           architecture: x64
-      
+
       - name: Build with Gradle
         run: chmod +x ./gradlew && chmod +x gradle/wrapper/gradle-wrapper.jar && ./gradlew build
 
@@ -35,7 +37,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-          
+
       # Set up the docker buildx
       - name: Set up Docker Buildx
         id: buildx
@@ -49,6 +51,6 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: atroshin/clematis.auth.api:latest
-          
+
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
