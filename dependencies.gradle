@@ -1,0 +1,40 @@
+apply from: file("${project.rootDir}/libraries.gradle")
+
+dependencies {
+
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor libs.lombok
+    checkstyle libs.checkstyle
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'org.jboss.resteasy:resteasy-jackson2-provider:3.12.1.Final'
+    implementation 'org.keycloak:keycloak-dependencies-server-all:11.0.3'
+    implementation 'org.infinispan:infinispan-bom:10.1.8.Final'
+
+    runtimeOnly 'mysql:mysql-connector-java'
+    //implementation 'org.liquibase:liquibase-core'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    compileOnly libs.commonsLang3
+    compileOnly libs.commonsIO
+    compileOnly libs.lombok
+    compileOnly 'com.google.code.findbugs:annotations:3.0.1'
+
+    testCompileOnly libs.jupiter
+    testCompileOnly 'com.google.code.findbugs:annotations:3.0.1'
+
+    testRuntimeOnly libs.jupiterEngine
+    testRuntimeOnly 'com.h2database:h2'
+
+    testImplementation (libs.springStarterTest) {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    testImplementation libs.sprintMockMvc
+    testImplementation libs.springSecurityTest
+}

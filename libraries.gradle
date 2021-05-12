@@ -1,0 +1,49 @@
+ext {
+    var commonsIoVersion = '2.6'
+
+    var checkstyleVersion = '7.6'
+    var spotbugsVersion = '4.7.0'
+
+    var junitJupiterVersion = '5.6.2'
+    var testContainersVersion = '1.15.3'
+    var firebirdTestContainersVersion = '1.1.0'
+
+    libs = [
+
+            // loggers
+            slf4j                : "org.slf4j:slf4j-api",
+            slf4jSimple          : "org.slf4j:slf4j-simple",
+            log4j                : "log4j:log4j",
+            commonsLogging       : "commons-logging:commons-logging",
+
+            // code patterns
+            commonsLang3         : "org.apache.commons:commons-lang3",
+            commonsIO            : "commons-io:commons-io:$commonsIoVersion",
+            guava                : "com.google.guava:guava",
+
+            // command line parser
+            args4j               : "args4j:args4j",
+
+            // code generation
+            lombok               : "org.projectlombok:lombok",
+
+            // code quality
+            checkstyle           : "com.puppycrawl.tools:checkstyle:$checkstyleVersion",
+            spotbugs             : "com.github.spotbugs:$spotbugsVersion",
+
+            // JUnit 5
+            jupiter              : "org.junit.jupiter:junit-jupiter:$junitJupiterVersion",
+            jupiterEngine        : "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion",
+
+            // test docker containers
+            testContainers       : "org.testcontainers:testcontainers:$testContainersVersion",
+            testContainersJupiter: "org.testcontainers:junit-jupiter:$testContainersVersion",
+            testContainersBom    : "org.testcontainers:testcontainers-bom:$testContainersVersion",
+            testContainerFirebird: "org.firebirdsql:firebird-testcontainers-java:$firebirdTestContainersVersion",
+
+            // test spring framework
+            springStarterTest: 'org.springframework.boot:spring-boot-starter-test',
+            sprintMockMvc : 'org.springframework.restdocs:spring-restdocs-mockmvc',
+            springSecurityTest : 'org.springframework.security:spring-security-test'
+    ]
+}

@@ -1,0 +1,122 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'com.github.spotbugs' version '4.7.1'
+    id 'org.asciidoctor.jvm.convert' version '3.1.0'
+    id 'jacoco'
+    id 'checkstyle'
+    id 'idea'
+    id 'eclipse'
+}
+
+group 'name.troshin.anton.clematis'
+version = '0.0.1-SNAPSHOT'
+
+apply from: file("${project.rootDir}/dependencies.gradle")
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+// ------------ JaCoCo test coverage + ascii doctor as a post processor ---------
+ext {
+    setProperty('snippetsDir', file("build/generated-snippets"))
+}
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    allprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        html.enabled true
+        csv.enabled false
+    }
+}
+
+// always run the tests before generating the report
+codeCoverageReport.dependsOn {
+    subprojects.test
+}
+
+test {
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+        classDumpDir = file("$buildDir/jacoco/classpathdumps")
+    }
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
+// ------------ Spotbugs configuration  ---------
+spotbugsMain {
+    reports {
+        xml {
+            enabled = false
+        }
+        html {
+            enabled = true
+            destination = file("$buildDir/reports/spotbugs/main/spotbugs.html")
+        }
+    }
+}
+
+spotbugsTest {
+    reports {
+        xml {
+            enabled = false
+        }
+        html {
+            enabled = true
+            destination = file("$buildDir/reports/spotbugs/test/spotbugs.html")
+        }
+    }
+}
+// ------------ Checkstyle configuration  ---------
+checkstyle {
+    configProperties.configFile = file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+    configProperties.checkstyleSuppressionFile = file("${project.rootDir}/config/checkstyle/suppressions.xml")
+}
+
+task checkstyleReport {
+    doLast {
+        if (file("${buildDir}/reports/checkstyle/${project.ext.checkType}.xml").exists()) {
+            ant.xslt(in: "${buildDir}/reports/checkstyle/${project.ext.checkType}.xml",
+                    style: "${project.rootDir}/config/checkstyle/checkstyle.xsl",
+                    out: "${buildDir}/reports/checkstyle/checkstyle_${project.ext.checkType}.html")
+        }
+    }
+}
+
+tasks.withType(Checkstyle) {
+    exclude '**/*Test*'
+}
+
+build {
+    dependsOn tasks.codeCoverageReport
+}
+

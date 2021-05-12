@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+    clematis_auth_api:
+        image: atroshin/clematis.auth.api:latest
+        networks:
+          - clematis
+        ports:
+          - "8083:8083"
+        env_file:
+          # replace clematis_auth_api_environment.default.env with actual file
+          - clematis_auth_api_environment.default.env
+
+networks:
+  clematis:
+    driver: bridge
