@@ -6,8 +6,5 @@ server:
 keycloak:
   server:
     contextPath: /auth
-    adminUser:
-      username: admin
-      password: admin!
     realmImportFile: clematis-realm.json
 
