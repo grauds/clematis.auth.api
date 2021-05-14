@@ -6,9 +6,10 @@ buildscript {
 }
 
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id 'org.springframework.boot' version '2.4.5'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+
     id 'com.github.spotbugs' version '4.7.1'
     id 'org.asciidoctor.jvm.convert' version '3.1.0'
     id 'jacoco'
@@ -26,16 +27,14 @@ sourceCompatibility = '11'
 targetCompatibility = '11'
 
 configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
     implementation.exclude group: "org.slf4j", module: "slf4j-log4j12"
 }
 
 repositories {
     mavenCentral()
 }
-// ------------ JaCoCo test coverage + ascii doctor as a post processor ---------
+// ------------ JaCoCo test coverage + ascii doctor as a post processor
+
 ext {
     setProperty('snippetsDir', file("build/generated-snippets"))
 }
@@ -63,6 +62,7 @@ codeCoverageReport.dependsOn {
 test {
     outputs.dir snippetsDir
     useJUnitPlatform()
+    testLogging.showStandardStreams = true
     jacoco {
         destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
         classDumpDir = file("$buildDir/jacoco/classpathdumps")

@@ -1,4 +1,4 @@
-package org.clematis.auth.config;
+package org.clematis.keycloak.config;
 
 import java.io.UnsupportedEncodingException;
 
@@ -33,9 +33,16 @@ public class EmbeddedKeycloakRequestFilter extends AbstractRequestFilter impleme
     }
 
     private ClientConnection createConnection(HttpServletRequest request) {
+
         return new ClientConnection() {
             @Override
             public String getRemoteAddr() {
+                String forwardedFor = request.getHeader("X-Forwarded-For");
+
+                if (forwardedFor != null) {
+                    return forwardedFor;
+                }
+
                 return request.getRemoteAddr();
             }
 

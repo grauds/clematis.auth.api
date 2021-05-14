@@ -1,0 +1,2 @@
+org.springframework.context.ApplicationListener=org.clematis.keycloak.config.PopulateKeycloakPropertiesApplicationListener
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.clematis.keycloak.config.EmbeddedSpringKeycloakAutoConfiguration
