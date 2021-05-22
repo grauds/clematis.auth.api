@@ -18,6 +18,8 @@ public class KeycloakServerProperties {
 
     private final Infinispan infinispan = new Infinispan();
 
+    private final Migration migration = new Migration();
+
     private String contextPath = "/auth";
 
     /**
@@ -38,5 +40,16 @@ public class KeycloakServerProperties {
     public static class AdminUser {
         String username = "admin";
         String password = "admin!";
+    }
+
+    /**
+     * @author Anton Troshin
+     */
+    @Getter
+    @Setter
+    public static class Migration {
+
+        Resource importLocation = new ClassPathResource("clematis-realm.json");
+        String importProvider = "singleFile";
     }
 }
