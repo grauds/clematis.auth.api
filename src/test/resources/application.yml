@@ -7,4 +7,6 @@ spring:
       minimum-idle: 1
 
 
-logging.file.path=./logs
+logging:
+  file:
+    path: ./logs
