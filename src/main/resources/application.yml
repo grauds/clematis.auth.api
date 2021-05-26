@@ -9,6 +9,9 @@ server:
   port: 8083
 
 logging:
+  file:
+    path:
+      ${LOGGING_PATH}
   level:
     org.jgroups: INFO
     org.infinispan: INFO
@@ -21,4 +24,3 @@ logging:
 keycloak:
   server:
     contextPath: /auth
-

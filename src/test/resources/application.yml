@@ -6,3 +6,5 @@ spring:
       maximum-pool-size: 25
       minimum-idle: 1
 
+
+logging.file.path=./logs
