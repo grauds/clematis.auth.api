@@ -42,8 +42,8 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
     }
 
     @Override
-    protected ExportImportManager migrateAndBootstrap() {
-        ExportImportManager exportImportManager = super.migrateAndBootstrap();
+    protected ExportImportManager bootstrap() {
+        ExportImportManager exportImportManager = super.bootstrap();
         createMasterRealmAdminUser();
         importTestRealm();
         return exportImportManager;

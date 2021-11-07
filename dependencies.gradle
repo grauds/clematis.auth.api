@@ -13,27 +13,28 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
     implementation 'org.jboss.resteasy:resteasy-jackson2-provider:3.13.2.Final'
-    implementation ('org.keycloak:keycloak-dependencies-server-all:12.0.4') {
+    implementation ('org.keycloak:keycloak-dependencies-server-all:15.0.2') {
         exclude group: 'org.keycloak', module: 'keycloak-model-map'
     }
-    implementation 'org.infinispan:infinispan-bom:11.0.4.Final'
+    compileOnly 'org.infinispan:infinispan-component-annotations:11.0.9.Final'
+    implementation 'org.infinispan:infinispan-bom:11.0.9.Final'
 
     // to use regexp in logback.xml
-    implementation 'org.codehaus.janino:janino:3.1.3'
+    implementation 'org.codehaus.janino:janino:3.1.6'
 
-    runtimeOnly 'mysql:mysql-connector-java:8.0.21'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.25'
 
     compileOnly libs.commonsLang3
     compileOnly libs.commonsIO
     compileOnly libs.lombok
-    compileOnly 'com.google.code.findbugs:annotations:3.0.1'
+    compileOnly 'com.google.code.findbugs:annotations:3.0.1u2'
 
     testCompileOnly libs.jupiter
     testCompileOnly libs.lombok
-    testCompileOnly 'com.google.code.findbugs:annotations:3.0.1'
+    testCompileOnly 'com.google.code.findbugs:annotations:3.0.1u2'
 
     testRuntimeOnly libs.jupiterEngine
-    testRuntimeOnly 'com.h2database:h2'
+    testRuntimeOnly 'com.h2database:h2:1.4.200'
 
     testImplementation (libs.springStarterTest) {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -41,5 +42,5 @@ dependencies {
 
     testImplementation 'io.rest-assured:rest-assured'
     testImplementation libs.sprintMockMvc
-    testImplementation libs.springSecurityTest
+    testImplementation 'org.springframework.security:spring-security-test:5.5.1'
 }

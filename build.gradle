@@ -19,7 +19,7 @@ plugins {
 }
 
 group 'name.troshin.anton.clematis'
-version = '0.0.2-SNAPSHOT'
+version = '0.0.2'
 
 apply from: file("${project.rootDir}/dependencies.gradle")
 

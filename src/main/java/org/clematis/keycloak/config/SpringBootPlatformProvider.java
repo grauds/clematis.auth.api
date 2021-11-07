@@ -1,5 +1,7 @@
 package org.clematis.keycloak.config;
 
+import java.io.File;
+
 import org.keycloak.platform.PlatformProvider;
 import org.keycloak.services.ServicesLogger;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -10,12 +12,15 @@ import org.springframework.context.event.SmartApplicationListener;
 import com.google.auto.service.AutoService;
 
 import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author Anton Troshin
  */
 @Slf4j
 @AutoService(PlatformProvider.class)
 public class SpringBootPlatformProvider implements PlatformProvider, SmartApplicationListener {
+
+    protected File tmpDir;
 
     Runnable onStartup;
 
@@ -37,6 +42,11 @@ public class SpringBootPlatformProvider implements PlatformProvider, SmartApplic
     }
 
     @Override
+    public String getListenerId() {
+        return this.getClass().getName();
+    }
+
+    @Override
     public void onStartup(@SuppressWarnings("hiding") Runnable onStartup) {
         this.onStartup = onStartup;
     }
@@ -51,11 +61,30 @@ public class SpringBootPlatformProvider implements PlatformProvider, SmartApplic
         ServicesLogger.LOGGER.fatal(cause);
     }
 
+    @Override
+    public File getTmpDirectory() {
+        return tmpDir;
+    }
+
     private void shutdown() {
         this.onShutdown.run();
     }
 
     private void startup() {
+        this.tmpDir = createTempDir();
         this.onStartup.run();
     }
+
+    protected File createTempDir() {
+        String tmpDirBase = System.getProperty("java.io.tmpdir");
+        File tmpDirNew = new File(tmpDirBase, "keycloak-spring-tmp");
+        boolean couldCreateDirs = tmpDirNew.mkdirs();
+        if (couldCreateDirs || tmpDirNew.exists()) {
+            log.debug("Using server tmp directory: {}", tmpDirNew.getAbsolutePath());
+            return tmpDirNew;
+        }
+
+        throw new RuntimeException("Failed to create temp directory: " + tmpDirNew.getAbsolutePath());
+    }
+
 }

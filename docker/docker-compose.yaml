@@ -5,11 +5,9 @@ services:
         image: atroshin/clematis.auth.api:latest
         networks:
           - clematis
-        ports:
-          - "8083:8083"
-        env_file:
+#        env_file:
           # replace clematis_auth_api_environment.default.env with actual file
-          - clematis_auth_api_environment.default.env
+#          - clematis_auth_api_environment.default.env
 
 networks:
   clematis:
