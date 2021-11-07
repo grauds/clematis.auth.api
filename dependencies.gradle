@@ -12,6 +12,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
+    implementation libs.swagger
+    implementation libs.swaggerUI
+
     implementation 'org.jboss.resteasy:resteasy-jackson2-provider:3.13.2.Final'
     implementation ('org.keycloak:keycloak-dependencies-server-all:15.0.2') {
         exclude group: 'org.keycloak', module: 'keycloak-model-map'

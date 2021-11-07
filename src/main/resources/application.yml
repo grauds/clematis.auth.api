@@ -1,4 +1,8 @@
 spring:
+  application:
+    name: "Clematis Authentication API"
+    version: 0.0.3-SNAPSHOT
+
   datasource:
     hikari:
       maximum-pool-size: 25

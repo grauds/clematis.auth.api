@@ -27,6 +27,10 @@ ext {
             // code generation
             lombok               : "org.projectlombok:lombok",
 
+            // swagger
+            swagger              : "io.springfox:springfox-boot-starter:3.0.0",
+            swaggerUI            : "io.springfox:springfox-swagger-ui:3.0.0",
+
             // code quality
             checkstyle           : "com.puppycrawl.tools:checkstyle:$checkstyleVersion",
             spotbugs             : "com.github.spotbugs:$spotbugsVersion",
