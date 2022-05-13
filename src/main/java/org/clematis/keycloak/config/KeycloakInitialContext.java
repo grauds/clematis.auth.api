@@ -13,11 +13,11 @@ import javax.naming.NamingException;
  */
 public class KeycloakInitialContext extends InitialContext {
 
-    private final Hashtable<?, ?> environment;
+    private final Hashtable<Object, Object> environment = new Hashtable<>();
 
     public KeycloakInitialContext(Hashtable<?, ?> environment) throws NamingException {
         super(environment);
-        this.environment = environment;
+        this.environment.putAll(environment);
     }
 
     @Override
