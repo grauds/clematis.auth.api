@@ -87,7 +87,7 @@ keycloak:
   scripting: {}
 
   mapStorage:
-    provider: concurrenthashmap
+    provider:
 
   client:
     provider: jpa

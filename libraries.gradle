@@ -8,6 +8,8 @@ ext {
     var testContainersVersion = '1.15.3'
     var firebirdTestContainersVersion = '1.1.0'
 
+    var restEasyVersion = '4.7.4.Final'
+
     libs = [
 
             // loggers
@@ -21,6 +23,12 @@ ext {
             commonsIO            : "commons-io:commons-io:$commonsIoVersion",
             guava                : "com.google.guava:guava",
 
+
+            resteasyServletInitializer : "org.jboss.resteasy:resteasy-servlet-initializer:$restEasyVersion",
+            resteasyJackson2Provider   : "org.jboss.resteasy:resteasy-jackson2-provider:$restEasyVersion",
+            resteasyJaxbProvider       : "org.jboss.resteasy:resteasy-jaxb-provider:$restEasyVersion",
+            resteasyMultipartProvider  : "org.jboss.resteasy:resteasy-multipart-provider:$restEasyVersion",
+
             // command line parser
             args4j               : "args4j:args4j",
 
@@ -28,8 +36,7 @@ ext {
             lombok               : "org.projectlombok:lombok",
 
             // swagger
-            swagger              : "io.springfox:springfox-boot-starter:3.0.0",
-            swaggerUI            : "io.springfox:springfox-swagger-ui:3.0.0",
+            swagger              : "org.springdoc:springdoc-openapi-ui:1.6.8",
 
             // code quality
             checkstyle           : "com.puppycrawl.tools:checkstyle:$checkstyleVersion",

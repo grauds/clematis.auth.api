@@ -3,6 +3,7 @@ package org.clematis.keycloak.config;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.clematis.keycloak.config.properties.KeycloakProperties;
 import org.keycloak.Config;
@@ -154,6 +155,11 @@ public class SpringBootConfigProvider implements Config.ConfigProvider {
         @Override
         public Config.Scope scope(String... path) {
             return SpringBootConfigProvider.this.scope(path);
+        }
+
+        @Override
+        public Set<String> getPropertyNames() {
+            return map.keySet();
         }
     }
 }

@@ -1,8 +1,6 @@
 package org.clematis.keycloak.config;
 
-import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.naming.CompositeName;
@@ -15,14 +13,11 @@ import javax.naming.NamingException;
  */
 public class KeycloakInitialContext extends InitialContext {
 
-    private final HashMap<Object, Object> environment;
+    private final Hashtable<?, ?> environment;
 
-    public KeycloakInitialContext(Hashtable<Object, Object> environment) throws NamingException {
+    public KeycloakInitialContext(Hashtable<?, ?> environment) throws NamingException {
         super(environment);
-        this.environment = new HashMap<>(environment.size());
-        for (Map.Entry<Object, Object> entry : environment.entrySet()) {
-            this.environment.put(entry.getKey(), entry.getValue());
-        }
+        this.environment = environment;
     }
 
     @Override

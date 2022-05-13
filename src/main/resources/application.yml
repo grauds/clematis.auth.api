@@ -1,12 +1,12 @@
 spring:
-  application:
-    name: "Clematis Authentication API"
-    version: 0.0.3-SNAPSHOT
-
   datasource:
     hikari:
       maximum-pool-size: 25
       minimum-idle: 1
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 server:
   forward-headers-strategy: native

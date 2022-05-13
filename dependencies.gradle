@@ -13,14 +13,20 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
     implementation libs.swagger
-    implementation libs.swaggerUI
 
-    implementation 'org.jboss.resteasy:resteasy-jackson2-provider:3.13.2.Final'
-    implementation ('org.keycloak:keycloak-dependencies-server-all:15.0.2') {
-        exclude group: 'org.keycloak', module: 'keycloak-model-map'
+    implementation libs.resteasyServletInitializer
+    implementation libs.resteasyJackson2Provider
+    implementation libs.resteasyJaxbProvider
+    implementation libs.resteasyMultipartProvider
+
+    implementation ('org.keycloak:keycloak-dependencies-server-all:18.0.0') {
+        exclude group: 'org.jboss.resteasy', module: 'resteasy-client'
+        exclude group: 'org.jboss.resteasy', module: 'resteasy-jaxb-provider'
+        exclude group: 'org.jboss.resteasy', module: 'resteasy-jaxrs'
+        exclude group: 'org.jboss.resteasy', module: 'resteasy-multipart-provider'
     }
-    compileOnly 'org.infinispan:infinispan-component-annotations:11.0.9.Final'
-    implementation 'org.infinispan:infinispan-bom:11.0.9.Final'
+    compileOnly 'org.infinispan:infinispan-component-annotations:13.0.8.Final'
+    implementation 'org.infinispan:infinispan-bom:13.0.8.Final'
 
     // to use regexp in logback.xml
     implementation 'org.codehaus.janino:janino:3.1.6'

@@ -6,7 +6,7 @@ buildscript {
 }
 
 plugins {
-    id 'org.springframework.boot' version '2.4.5'
+    id 'org.springframework.boot' version '2.6.3'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
 
@@ -16,10 +16,14 @@ plugins {
     id 'checkstyle'
     id 'idea'
     id 'eclipse'
+
+    id 'com.palantir.docker' version '0.30.0'
+    id 'com.palantir.docker-run' version '0.30.0'
+    id 'com.palantir.docker-compose' version '0.30.0'
 }
 
 group 'name.troshin.anton.clematis'
-version = '0.0.3-SNAPSHOT'
+version = '0.0.3'
 
 apply from: file("${project.rootDir}/dependencies.gradle")
 
@@ -119,5 +123,34 @@ tasks.withType(Checkstyle) {
 
 build {
     dependsOn tasks.codeCoverageReport
+}
+
+docker {
+    name = "atroshin/${project.name}:${version}"
+    dockerfile = file('Dockerfile')
+    copySpec.from("${buildDir}").into("build")
+    pull true
+    noCache true
+}
+
+dockerCompose {
+    dockerComposeFile file("${project.rootDir}/docker/docker-compose.yml")
+}
+
+dockerRun {
+    name 'clematis.auth.api'
+    image "atroshin/${project.name}:${version}"
+    ports '18083:8080'
+}
+
+springBoot {
+    buildInfo {
+        properties {
+            artifact = 'clematis-auth-api'
+            version = version
+            group = 'org.clematis.keycloak'
+            name = 'Clematis Authentication API'
+        }
+    }
 }
 

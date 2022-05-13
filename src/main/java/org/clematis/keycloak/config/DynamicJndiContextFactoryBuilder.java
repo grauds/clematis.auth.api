@@ -56,7 +56,7 @@ public class DynamicJndiContextFactoryBuilder implements InitialContextFactoryBu
     public void init() {
         try {
             NamingManager.setInitialContextFactoryBuilder(this);
-        } catch (NamingException e) {
+        } catch (NamingException | IllegalStateException e) {
             log.error("Could not configure InitialContextFactoryBuilder", e);
         }
     }

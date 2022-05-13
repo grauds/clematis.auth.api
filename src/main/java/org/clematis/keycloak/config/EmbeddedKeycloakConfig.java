@@ -1,6 +1,8 @@
 package org.clematis.keycloak.config;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -85,15 +87,18 @@ public class EmbeddedKeycloakConfig {
     }
 
     @Bean
+    @ConditionalOnMissingBean(name = "keycloakJaxRsApplication")
     ServletRegistrationBean<HttpServlet30Dispatcher>
         keycloakJaxRsApplication(KeycloakServerProperties keycloakServerProperties) {
+
+        initKeycloakEnvironmentFromProfiles();
 
         ServletRegistrationBean<HttpServlet30Dispatcher> servlet
                 = new ServletRegistrationBean<>(new HttpServlet30Dispatcher());
 
         servlet.addInitParameter("javax.ws.rs.Application", EmbeddedKeycloakApplication.class.getName());
 
-        servlet.addInitParameter("resteasy.allowGzip", Boolean.TRUE.toString());
+        servlet.addInitParameter("resteasy.allowGzip", Boolean.FALSE.toString());
         servlet.addInitParameter("keycloak.embedded", Boolean.TRUE.toString());
         servlet.addInitParameter(ResteasyContextParameters.RESTEASY_EXPAND_ENTITY_REFERENCES, Boolean.FALSE.toString());
         servlet.addInitParameter(ResteasyContextParameters.RESTEASY_SECURE_PROCESSING_FEATURE, Boolean.TRUE.toString());
@@ -109,6 +114,33 @@ public class EmbeddedKeycloakConfig {
         servlet.setAsyncSupported(true);
 
         return servlet;
+    }
+
+    private void initKeycloakEnvironmentFromProfiles() {
+
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("profile.properties")) {
+
+            if (in == null) {
+                log.info("Could not find profile.properties on classpath.");
+                return;
+            }
+
+            Properties profile = new Properties();
+            profile.load(in);
+
+            log.info("Found profile.properties on classpath.");
+            String profilePrefix = "keycloak.profile.";
+            for (Object key : profile.keySet()) {
+                String value = (String) profile.get(key);
+                String featureName = key.toString().toLowerCase();
+                String currentValue = System.getProperty(profilePrefix + featureName);
+                if (currentValue == null) {
+                    System.setProperty(profilePrefix + featureName, value);
+                }
+            }
+        } catch (IOException ioe) {
+            log.warn("Could not read profile.properties.", ioe);
+        }
     }
 
     @Bean
