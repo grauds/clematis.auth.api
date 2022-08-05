@@ -13,8 +13,9 @@ server:
   port: 8083
 
 logging:
-  path:
-    ${LOGGING_PATH}
+  file:
+    path:
+      ${LOGGING_PATH}
 
   level:
     org.jgroups: INFO
