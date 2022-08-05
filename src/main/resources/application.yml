@@ -15,7 +15,7 @@ server:
 logging:
   file:
     path:
-      ${LOGGING_PATH}
+      ${LOG_PATH}
 
   level:
     org.jgroups: INFO
