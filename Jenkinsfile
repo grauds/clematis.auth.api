@@ -21,8 +21,7 @@ pipeline {
         stage('Get code') {
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/grauds/clematis.auth.api.git'
-                git 'checkout main'
+                git branch: 'main', url: 'https://github.com/grauds/clematis.auth.api.git'
                 sh 'chmod +x gradlew'
             }
         }
