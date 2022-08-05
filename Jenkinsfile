@@ -22,6 +22,7 @@ pipeline {
             steps {
                 // Get some code from a GitHub repository
                 git 'https://github.com/grauds/clematis.auth.api.git'
+                git checkout main
                 sh 'chmod +x gradlew'
             }
         }
