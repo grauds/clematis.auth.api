@@ -4,7 +4,7 @@ services:
     clematis_auth_api:
         image: clematis.auth.api:latest
         env_file:
-          - clematis_auth_api_qa.env
+          - clematis_auth_api.env
         volumes:
           - /home/clematis/logs:/var/log/clematis
         ports:

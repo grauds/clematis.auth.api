@@ -23,7 +23,6 @@
 
     <property name="LOG_HISTORY" value="7" />
     <property name="LOG_LEVEL" value="INFO" />
-    <property name="LOG_PATH" value="log" />
 
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
 
