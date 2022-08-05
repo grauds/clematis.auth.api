@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+    clematis_auth_api:
+        image: clematis.auth.api:latest
+        networks:
+          - clematis
+        env_file:
+          - clematis_auth_api_qa.env
+        volumes:
+          - /home/clematis/logs:/var/log/clematis
+        ports:
+          - "8083:8083"
+        restart: unless-stopped
+
+networks:
+  clematis:
+    driver: bridge
