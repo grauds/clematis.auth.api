@@ -50,12 +50,12 @@ pipeline {
 
         stage("Build and start docker compose services") {
             environment {
-                KEYCLOAK_DB_PASSWORD = credentials('KEYCLOAK_DB_PASSWORD')
+                SPRING_DATASOURCE_PASSWORD = credentials('KEYCLOAK_DB_PASSWORD')
             }
             steps {
                 sh '''
                  cd jenkins
-                 docker compose build --build-arg SPRING_DATASOURCE_PASSWORD='$KEYCLOAK_DB_PASSWORD'
+                 docker compose build --build-arg SPRING_DATASOURCE_PASSWORD='$SPRING_DATASOURCE_PASSWORD'
                  docker compose up -d 
               '''
             }
