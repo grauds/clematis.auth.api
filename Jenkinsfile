@@ -55,7 +55,7 @@ pipeline {
             steps {
                 sh '''
                  cd jenkins
-                 docker compose build --build-arg SPRING_DATASOURCE_PASSWORD='$MYSQL_SPRING_DATASOURCE_PASSWORD'
+                 docker compose build --build-arg SPRING_DATASOURCE_PASSWORD='$KEYCLOAK_DATASOURCE_PASSWORD'
                  docker compose up -d 
               '''
             }
