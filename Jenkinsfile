@@ -50,7 +50,7 @@ pipeline {
 
         stage("Build and start docker compose services") {
             environment {
-                SPRING_DATASOURCE_PASSWORD = credentials('MYSQL_SPRING_DATASOURCE_PASSWORD')
+                KEYCLOAK_DB_PASSWORD = credentials('KEYCLOAK_DB_PASSWORD')
             }
             steps {
                 sh '''
