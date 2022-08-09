@@ -11,9 +11,13 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+  jmx:
+    enabled: true
+    url: service:jmx:jmxmp://${JMXMP_HOST}:${JMXMP_PORT}/
+
 logging:
   file:
     path: ./logs
 
 JMXMP_HOST: 0.0.0.0
-JMXMP_PORT: 5001
+JMXMP_PORT: 15601
