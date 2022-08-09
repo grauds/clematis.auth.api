@@ -11,6 +11,8 @@ services:
           - /home/clematis/logs:/var/log/clematis
         ports:
           - "8083:8083"
+          - "15083:5000"
+          - "15084:5001"
         restart: unless-stopped
 
 networks:

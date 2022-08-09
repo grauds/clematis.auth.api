@@ -8,6 +8,10 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+  jmx:
+    enabled: true
+    url: service:jmx:jmxmp://${JMXMP_HOST}:${JMXMP_PORT}/
+
 server:
   forward-headers-strategy: native
   port: 8083
