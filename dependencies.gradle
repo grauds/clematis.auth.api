@@ -21,12 +21,13 @@ dependencies {
     implementation libs.resteasyJaxbProvider
     implementation libs.resteasyMultipartProvider
 
-    implementation ('org.keycloak:keycloak-dependencies-server-all:18.0.0') {
+    implementation ('org.keycloak:keycloak-dependencies-server-all:19.0.3') {
         exclude group: 'org.jboss.resteasy', module: 'resteasy-client'
         exclude group: 'org.jboss.resteasy', module: 'resteasy-jaxb-provider'
         exclude group: 'org.jboss.resteasy', module: 'resteasy-jaxrs'
         exclude group: 'org.jboss.resteasy', module: 'resteasy-multipart-provider'
     }
+    implementation('org.keycloak:keycloak-crypto-default:19.0.3')
     compileOnly 'org.infinispan:infinispan-component-annotations:13.0.8.Final'
     implementation 'org.infinispan:infinispan-bom:13.0.8.Final'
 

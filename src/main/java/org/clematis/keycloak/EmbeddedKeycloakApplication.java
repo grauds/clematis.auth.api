@@ -10,6 +10,7 @@ import javax.ws.rs.core.Context;
 import org.clematis.keycloak.config.SpringBootConfigProvider;
 import org.clematis.keycloak.config.properties.KeycloakServerProperties;
 import org.keycloak.Config;
+import org.keycloak.common.crypto.CryptoIntegration;
 import org.keycloak.exportimport.ExportImportConfig;
 import org.keycloak.exportimport.ExportImportManager;
 import org.keycloak.models.KeycloakSession;
@@ -32,6 +33,7 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
     private final KeycloakServerProperties keycloakServerProperties;
 
     public EmbeddedKeycloakApplication(@Context ServletContext context) {
+        CryptoIntegration.init(this.getClass().getClassLoader());
         this.keycloakServerProperties = WebApplicationContextUtils
                 .getRequiredWebApplicationContext(context)
                 .getBean(KeycloakServerProperties.class);
