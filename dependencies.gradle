@@ -28,6 +28,7 @@ dependencies {
         exclude group: 'org.jboss.resteasy', module: 'resteasy-multipart-provider'
     }
     implementation('org.keycloak:keycloak-crypto-default:19.0.3')
+    implementation('org.keycloak:keycloak-admin-ui:19.0.3')
     compileOnly 'org.infinispan:infinispan-component-annotations:13.0.8.Final'
     implementation 'org.infinispan:infinispan-bom:13.0.8.Final'
 
