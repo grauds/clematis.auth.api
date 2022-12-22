@@ -35,9 +35,6 @@ ext {
             // code generation
             lombok               : "org.projectlombok:lombok",
 
-            // swagger
-            swagger              : "org.springdoc:springdoc-openapi-ui:1.6.14",
-
             // code quality
             checkstyle           : "com.puppycrawl.tools:checkstyle:$checkstyleVersion",
             spotbugs             : "com.github.spotbugs:$spotbugsVersion",
