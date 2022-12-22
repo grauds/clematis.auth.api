@@ -38,27 +38,18 @@ pipeline {
             }
         }
 
-        stage("Stop and remove old infrastructure, volumes and containers") {
-            steps {
-                sh '''
-                cd jenkins
-                docker compose ps
-                docker compose down -v 
-                '''
-            }
-        }
-
-        stage("Build and start docker compose services") {
+        stage("Build and start docker compose service") {
             environment {
                 SPRING_DATASOURCE_PASSWORD = credentials('KEYCLOAK_DB_PASSWORD')
             }
             steps {
                 sh '''
-                 cd jenkins
-                 docker stop clematis-money-tracker-api || true && docker rm clematis-money-tracker-api || true
-                 docker compose build --build-arg SPRING_DATASOURCE_PASSWORD='$SPRING_DATASOURCE_PASSWORD'
-                 docker compose up -d 
-              '''
+                cd jenkins
+                docker compose stop
+                docker stop clematis-auth-api || true && docker rm clematis-auth-api || true
+                docker compose build --build-arg SPRING_DATASOURCE_PASSWORD='$SPRING_DATASOURCE_PASSWORD'
+                docker compose up -d 
+                '''
             }
         }
     }
