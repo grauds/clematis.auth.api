@@ -10,13 +10,11 @@ dependencies {
     implementation 'com.google.auto.service:auto-service:1.0'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     implementation 'org.glassfish.main.external:jmxremote_optional-repackaged:5.0'
 
     implementation "org.springdoc:springdoc-openapi-ui:1.6.14"
-    implementation "org.springdoc:springdoc-openapi-security:1.6.14"
     implementation "org.springdoc:springdoc-openapi-hateoas:1.6.14"
     implementation "org.springdoc:springdoc-openapi-data-rest:1.6.14"
 
