@@ -5,7 +5,7 @@ services:
         container_name: clematis-auth-api
         image: clematis.auth.api:latest
         networks:
-          - clematis_auth
+          - clematis
         env_file:
           - clematis_auth_api.env
         volumes:
@@ -15,6 +15,25 @@ services:
           - "15083:5000"
           - "15084:5001"
         restart: unless-stopped
+
+    mysql_db:
+      networks:
+        - clematis
+      container_name: clematis_mysql_db
+      image: library/mysql:8.0
+      mem_reservation: 1G
+      volumes:
+        - /home/clematis/storage:/opt/data
+      env_file:
+        - clematis_auth_db.env
+        - clematis_auth_db.env.private
+      ports:
+        - ${MYSQL_LOCAL_PORT}:${MYSQL_DOCKER_PORT}
+      environment:
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
 
 networks:
   clematis:
