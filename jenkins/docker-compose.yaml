@@ -7,7 +7,7 @@ services:
         networks:
           - clematis
         env_file:
-          - clematis_auth_api.env
+          - .env
         volumes:
           - /home/clematis/auth/logs:/var/log/clematis
         ports:
@@ -19,14 +19,13 @@ services:
     mysql_db:
       networks:
         - clematis
-      container_name: clematis_mysql_db
+      container_name: clematis-auth-mysql-db
       image: library/mysql:8.0
       mem_reservation: 1G
       volumes:
         - /home/clematis/storage:/opt/data
       env_file:
-        - clematis_auth_db.env
-        - clematis_auth_db.env.private
+        - .env
       ports:
         - ${MYSQL_LOCAL_PORT}:${MYSQL_DOCKER_PORT}
       environment:
@@ -34,6 +33,7 @@ services:
         MYSQL_PASSWORD: ${MYSQL_PASSWORD}
         MYSQL_DATABASE: ${MYSQL_DATABASE}
         MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      restart: unless-stopped
 
 networks:
   clematis:

@@ -300,6 +300,7 @@
       ],
       "clematis-money-tracker-ui": [],
       "clematis-money-tracker-api": [],
+      "testClient": [],
       "security-admin-console": [],
       "admin-cli": [],
       "account-console": [],
@@ -396,6 +397,66 @@
     }
   },
   "groups": [],
+  "users" : [ {
+    "id" : "a5461470-33eb-4b2d-82d4-b0484e96ad7f",
+    "createdTimestamp" : 1574174706812,
+    "username" : "john@test.com",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "id" : "024b62f1-3af0-49fc-a15f-e843b72e00df",
+      "type" : "password",
+      "createdDate" : 1574174719522,
+      "secretData" : "{\"value\":\"tfHk9estQfa27osLCY2QelpkL6Sm6rPS+iQ33ytPSD4p10Fk7ophI7ChERAnzDjVSmvdsZAttsg2Yr+8F4Gzfw==\",\"salt\":\"goh99WgI7T1ZuGdrKzNAeQ==\"}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "22a4d9fe-194c-4c6e-841a-8a55b402459f",
+    "createdTimestamp" : 1580237252522,
+    "username" : "mike@other.com",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "id" : "73c8d1ca-d548-4e1a-a82d-2c1d0d3ee017",
+      "type" : "password",
+      "createdDate" : 1580237291489,
+      "secretData" : "{\"value\":\"fea4QiAzqmOctQGtJrKvoPRIUKLdQ5UKFIEPEQ7PYjTjxvucDZVk8yzXNfsDHvgpZ2rWiwsACgvsymdHnmru9w==\",\"salt\":\"nu5yJh98jz8cGLnLx36uvg==\"}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id": "b8360954-ec6c-43cc-ace8-792a479775e9",
+    "createdTimestamp": 1652531448456,
+    "username": "service-account-clematis-money-tracker-api",
+    "enabled": true,
+    "totp": false,
+    "emailVerified": false,
+    "serviceAccountClientId": "clematis-money-tracker-api",
+    "disableableCredentialTypes": [],
+    "requiredActions": [],
+    "realmRoles": [
+      "default-roles-clematis"
+    ],
+    "notBefore": 0,
+    "groups": []
+  } ],
   "defaultRole": {
     "id": "fefced07-2d68-4f99-9178-7f4381830482",
     "name": "default-roles-clematis",
@@ -440,24 +501,6 @@
   "webAuthnPolicyPasswordlessCreateTimeout": 0,
   "webAuthnPolicyPasswordlessAvoidSameAuthenticatorRegister": false,
   "webAuthnPolicyPasswordlessAcceptableAaguids": [],
-  "users": [
-    {
-      "id": "b8360954-ec6c-43cc-ace8-792a479775e9",
-      "createdTimestamp": 1652531448456,
-      "username": "service-account-clematis-money-tracker-api",
-      "enabled": true,
-      "totp": false,
-      "emailVerified": false,
-      "serviceAccountClientId": "clematis-money-tracker-api",
-      "disableableCredentialTypes": [],
-      "requiredActions": [],
-      "realmRoles": [
-        "default-roles-clematis"
-      ],
-      "notBefore": 0,
-      "groups": []
-    }
-  ],
   "scopeMappings": [
     {
       "clientScope": "offline_access",
@@ -932,6 +975,64 @@
         "web-origins",
         "roles",
         "profile",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
+      "id": "8c59e846-9096-4c9d-982e-d5d3903802fd",
+      "clientId": "testClient",
+      "baseUrl": "http://localhost:8082/test-client/login/oauth2/code/custom",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "fdd76d92-ab54-415f-99fe-72c43a0ac7b4",
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": false,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "saml.assertion.signature": "false",
+        "saml.force.post.binding": "false",
+        "saml.multivalued.roles": "false",
+        "saml.encrypt": "false",
+        "backchannel.logout.revoke.offline.tokens": "false",
+        "saml.server.signature": "false",
+        "saml.server.signature.keyinfo.ext": "false",
+        "exclude.session.state.from.auth.response": "false",
+        "backchannel.logout.session.required": "true",
+        "client_credentials.use_refresh_token": "false",
+        "saml_force_name_id_format": "false",
+        "saml.client.signature": "false",
+        "tls.client.certificate.bound.access.tokens": "false",
+        "saml.authnstatement": "false",
+        "display.on.consent.screen": "false",
+        "saml.onetimeuse.condition": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "defaultClientScopes": [
+        "web-origins",
+        "role_list",
+        "profile",
+        "roles",
         "email"
       ],
       "optionalClientScopes": [

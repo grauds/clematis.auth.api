@@ -1,25 +1,20 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="ClematisAuthorizationApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <envs>
-      <env name="LOG_PATH" value="./log/clematis" />
-      <env name="LOGGING_PATH" value="./log/clematis" />
-      <env name="SPRING_DATASOURCE_DRIVER_CLASS_NAME" value="com.mysql.cj.jdbc.Driver" />
-      <env name="SPRING_DATASOURCE_PASSWORD" value="xxx" />
-      <env name="SPRING_DATASOURCE_URL" value="jdbc:mysql://192.168.1.2:3306/keycloak?serverTimezone=UTC" />
-      <env name="SPRING_DATASOURCE_USERNAME" value="anton" />
-      <env name="JMXMP_HOST" value="0.0.0.0" />
-      <env name="JMXMP_PORT" value="5001" />
+      <env name="SPRING_DATASOURCE_PASSWORD" value="TjCGqBS9PfwCQJ" />
     </envs>
     <module name="clematis.auth.api.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="org.clematis.keycloak.ClematisAuthorizationApp" />
     <extension name="net.ashald.envfile">
-      <option name="IS_ENABLED" value="false" />
-      <option name="IS_SUBST" value="false" />
+      <option name="IS_ENABLED" value="true" />
+      <option name="IS_SUBST" value="true" />
       <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
       <option name="IS_IGNORE_MISSING_FILES" value="false" />
       <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
       <ENTRIES>
         <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        <ENTRY IS_ENABLED="true" PARSER="env" IS_EXECUTABLE="false" PATH="jenkins/.env" />
+        <ENTRY IS_ENABLED="true" PARSER="env" IS_EXECUTABLE="false" PATH="config/.env.local" />
       </ENTRIES>
     </extension>
     <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">

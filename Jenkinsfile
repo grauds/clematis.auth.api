@@ -47,6 +47,7 @@ pipeline {
                 cd jenkins
                 docker compose stop
                 docker stop clematis-auth-api || true && docker rm clematis-auth-api || true
+                docker stop clematis-auth-mysql-db || true && docker rm clematis-auth-mysql-db || true
                 docker compose build --build-arg SPRING_DATASOURCE_PASSWORD='$SPRING_DATASOURCE_PASSWORD'
                 docker compose up -d 
                 '''

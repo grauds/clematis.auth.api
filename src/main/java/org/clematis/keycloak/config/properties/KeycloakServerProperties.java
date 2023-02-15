@@ -50,6 +50,7 @@ public class KeycloakServerProperties {
     public static class Migration {
 
         Resource importLocation = new ClassPathResource("clematis-realm.json");
-        String importProvider = "singleFile";
+
+        String importProvider = "jarFile";
     }
 }

@@ -1,12 +1,15 @@
 package org.clematis.keycloak;
 
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.core.Context;
 
+import static org.keycloak.exportimport.ExportImportConfig.STRATEGY;
+import static org.keycloak.exportimport.Strategy.IGNORE_EXISTING;
+import static org.springframework.util.StringUtils.hasText;
 import org.clematis.keycloak.config.SpringBootConfigProvider;
 import org.clematis.keycloak.config.properties.KeycloakServerProperties;
 import org.keycloak.Config;
@@ -23,6 +26,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * @author Anton Troshin
@@ -47,7 +51,7 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
     protected ExportImportManager bootstrap() {
         ExportImportManager exportImportManager = super.bootstrap();
         createMasterRealmAdminUser();
-        importTestRealm();
+        importClematisRealm();
         return exportImportManager;
     }
 
@@ -67,7 +71,7 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
 
             boolean randomPassword = false;
             String password = adminUser.getPassword();
-            if (StringUtils.isEmpty(adminUser.getPassword())) {
+            if (hasText(adminUser.getPassword())) {
                 password = UUID.randomUUID().toString();
                 randomPassword = true;
             }
@@ -89,7 +93,7 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
         }
     }
 
-    protected void importTestRealm() {
+    protected void importClematisRealm() {
 
         KeycloakServerProperties.Migration imex = keycloakServerProperties.getMigration();
         Resource importLocation = imex.getImportLocation();
@@ -99,9 +103,7 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
             return;
         }
 
-        File file;
         try {
-            file = importLocation.getFile();
 
             log.info("Starting Keycloak realm configuration import from location: {}", importLocation);
 
@@ -109,7 +111,11 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
 
             ExportImportConfig.setAction("import");
             ExportImportConfig.setProvider(imex.getImportProvider());
-            ExportImportConfig.setFile(file.getAbsolutePath());
+
+            URL file = importLocation.getURL();
+            ExportImportConfig.setFile(file.toString());
+
+            System.setProperty(STRATEGY, IGNORE_EXISTING.toString());
 
             ExportImportManager manager = new ExportImportManager(session);
             manager.runImport();
