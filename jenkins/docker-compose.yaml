@@ -23,7 +23,7 @@ services:
       image: library/mysql:8.0
       mem_reservation: 1G
       volumes:
-        - /home/clematis/storage:/var/lib/mysql
+        - /home/clematis/auth/storage:/var/lib/mysql
       env_file:
         - .env
       ports:
