@@ -23,7 +23,7 @@ spring:
 
 server:
   forward-headers-strategy: native
-  port: 8083
+  port: 8080
 
 logging:
   file:
