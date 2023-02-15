@@ -23,7 +23,7 @@ services:
       image: library/mysql:8.0
       mem_reservation: 1G
       volumes:
-        - /home/clematis/storage:/opt/data
+        - /home/clematis/storage:/var/lib/mysql
       env_file:
         - .env
       ports:
@@ -34,6 +34,10 @@ services:
         MYSQL_DATABASE: ${MYSQL_DATABASE}
         MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       restart: unless-stopped
+
+volumes:
+  storage:
+    name: clematis-auth-mysql-db-store
 
 networks:
   clematis:
