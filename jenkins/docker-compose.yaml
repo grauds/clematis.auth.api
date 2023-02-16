@@ -16,8 +16,7 @@ services:
           - "15084:5001"
         restart: unless-stopped
         depends_on:
-          mysql_db:
-            condition: service_healthy
+          - mysql_db
 
     mysql_db:
       networks:
