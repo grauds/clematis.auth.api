@@ -5,20 +5,23 @@ services:
         container_name: clematis-auth-api
         image: clematis.auth.api:latest
         networks:
-          - clematis
+          - clematis_auth
         env_file:
           - .env
         volumes:
           - /home/clematis/auth/logs:/var/log/clematis
         ports:
-          - "8083:8080"
+          - ${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}
           - "15083:5000"
           - "15084:5001"
         restart: unless-stopped
+        depends_on:
+          mysql_db:
+            condition: service_healthy
 
     mysql_db:
       networks:
-        - clematis
+        - clematis_auth
       container_name: clematis-auth-mysql-db
       image: library/mysql:8.0
       mem_reservation: 1G
@@ -40,5 +43,5 @@ volumes:
     name: clematis-auth-mysql-db-store
 
 networks:
-  clematis:
+  clematis_auth:
     driver: bridge
