@@ -43,6 +43,18 @@ ext {
     setProperty('snippetsDir', file("build/generated-snippets"))
 }
 
+
+test {
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+    testLogging.showStandardStreams = true
+    finalizedBy jacocoTestReport
+    jacoco {
+        destinationFile = file("jacoco/jacocoTest.exec")
+        classDumpDir = file("jacoco/classpathdumps")
+    }
+}
+
 task codeCoverageReport(type: JacocoReport) {
     executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
 
@@ -52,7 +64,7 @@ task codeCoverageReport(type: JacocoReport) {
 
     reports {
         xml.enabled true
-        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        xml.destination file("jacoco/report.xml")
         html.enabled true
         csv.enabled false
     }
@@ -63,13 +75,13 @@ codeCoverageReport.dependsOn {
     subprojects.test
 }
 
-test {
-    outputs.dir snippetsDir
-    useJUnitPlatform()
-    testLogging.showStandardStreams = true
-    jacoco {
-        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
-        classDumpDir = file("$buildDir/jacoco/classpathdumps")
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    reports {
+        xml.required = true
+        csv.required = false
+        html.outputLocation = file('jacoco/html')
+        xml.outputLocation = file('jacoco/jacoco.xml')
     }
 }
 

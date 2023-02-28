@@ -38,6 +38,12 @@ pipeline {
             }
         }
 
+        stage('Publish tests') {
+            steps {
+                publishCoverage adapters: [jacocoAdapter('jacoco/jacoco.xml')], sourceFileResolver: sourceFiles('NEVER_STORE')
+            }
+        }
+
         stage("Build and start docker compose service") {
             environment {
                 SPRING_DATASOURCE_PASSWORD = credentials('KEYCLOAK_DB_PASSWORD')

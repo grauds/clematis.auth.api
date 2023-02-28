@@ -27,3 +27,6 @@ hs_err_pid*
 .gradle
 log
 build
+/jacoco/
+/logs/
+/LOG_PATH_IS_UNDEFINED/
