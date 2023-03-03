@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-    auth-api:
+    clematis-auth-api:
         container_name: clematis-auth-api
         image: clematis.auth.api:latest
         networks:
@@ -16,9 +16,9 @@ services:
           - "15084:5001"
         restart: unless-stopped
         depends_on:
-          - mysql_db
+          - clematis-auth-db
 
-    mysql_db:
+    clematis-auth-db:
       networks:
         - clematis_auth
       container_name: clematis-auth-mysql-db
