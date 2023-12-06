@@ -28,7 +28,31 @@ pipeline {
 
         stage('Gradle build') {
             steps {
-                sh './gradlew clean build'
+              sh './gradlew clean build'
+            }
+
+        }
+
+        stage ('Dependency-Check') {
+            steps {
+                dependencyCheck additionalArguments: '''
+                    -o "./"
+                    -s "./"
+                    -f "ALL"
+                    --prettyPrint''', odcInstallation: 'Dependency Checker'
+
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+        }
+
+        stage('Publish tests') {
+            steps {
+                recordCoverage(tools: [[parser: 'JACOCO']],
+                        id: 'jacoco', name: 'JaCoCo Coverage',
+                        sourceCodeRetention: 'EVERY_BUILD',
+                        qualityGates: [
+                                [threshold: 60.0, metric: 'LINE', baseline: 'PROJECT', unstable: true],
+                                [threshold: 60.0, metric: 'BRANCH', baseline: 'PROJECT', unstable: true]])
             }
         }
 
@@ -47,12 +71,6 @@ pipeline {
         stage('Build docker image') {
             steps {
                 sh 'docker build -t clematis.auth.api .'
-            }
-        }
-
-        stage('Publish tests') {
-            steps {
-                publishCoverage adapters: [jacocoAdapter('jacoco/jacoco.xml')], sourceFileResolver: sourceFiles('STORE_LAST_BUILD')
             }
         }
 
