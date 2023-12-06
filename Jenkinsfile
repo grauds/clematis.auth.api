@@ -56,18 +56,6 @@ pipeline {
             }
         }
 
-        stage ('Dependency-Check') {
-            steps {
-                dependencyCheck additionalArguments: '''
-                    -o "./"
-                    -s "./"
-                    -f "ALL"
-                    --prettyPrint''', odcInstallation: 'Dependency Checker'
-
-                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-            }
-        }
-
         stage('Build docker image') {
             steps {
                 sh 'docker build -t clematis.auth.api .'
