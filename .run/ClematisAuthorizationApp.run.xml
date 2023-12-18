@@ -3,7 +3,7 @@
     <envs>
       <env name="SPRING_DATASOURCE_PASSWORD" value="TjCGqBS9PfwCQJ" />
     </envs>
-    <module name="clematis.auth.api.main" />
+    <module name="name.troshin.anton.clematis.clematis.auth.api.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="org.clematis.keycloak.ClematisAuthorizationApp" />
     <extension name="net.ashald.envfile">
       <option name="IS_ENABLED" value="true" />

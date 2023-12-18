@@ -1,11 +1,9 @@
-apply from: file("${project.rootDir}/libraries.gradle")
-
 dependencies {
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor libs.lombok
+    annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'com.google.auto.service:auto-service:1.0'
-    checkstyle libs.checkstyle
+    checkstyle "com.puppycrawl.tools:checkstyle:7.6"
 
     implementation 'com.google.auto.service:auto-service:1.0'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -18,21 +16,22 @@ dependencies {
     implementation "org.springdoc:springdoc-openapi-hateoas:1.6.14"
     implementation "org.springdoc:springdoc-openapi-data-rest:1.6.14"
 
-    implementation libs.resteasyServletInitializer
-    implementation libs.resteasyJackson2Provider
-    implementation libs.resteasyJaxbProvider
-    implementation libs.resteasyMultipartProvider
+    implementation "org.jboss.resteasy:resteasy-servlet-initializer:4.7.4.Final"
+    implementation "org.jboss.resteasy:resteasy-jackson2-provider:4.7.4.Final"
+    implementation "org.jboss.resteasy:resteasy-jaxb-provider:4.7.4.Final"
+    implementation "org.jboss.resteasy:resteasy-multipart-provider:4.7.4.Final"
 
-    implementation ('org.keycloak:keycloak-dependencies-server-all:19.0.3') {
+    implementation ('org.keycloak:keycloak-dependencies-server-all:20.0.5') {
         exclude group: 'org.jboss.resteasy', module: 'resteasy-client'
         exclude group: 'org.jboss.resteasy', module: 'resteasy-jaxb-provider'
         exclude group: 'org.jboss.resteasy', module: 'resteasy-jaxrs'
         exclude group: 'org.jboss.resteasy', module: 'resteasy-multipart-provider'
     }
-    implementation('org.keycloak:keycloak-crypto-default:19.0.3')
-    implementation('org.keycloak:keycloak-admin-ui:19.0.3')
-    compileOnly 'org.infinispan:infinispan-component-annotations:13.0.8.Final'
-    implementation 'org.infinispan:infinispan-bom:13.0.8.Final'
+    implementation('org.keycloak:keycloak-crypto-default:20.0.5')
+    implementation('org.keycloak:keycloak-admin-ui:20.0.5')
+
+    compileOnly 'org.infinispan:infinispan-component-annotations:14.0.13.Final'
+    implementation 'org.infinispan:infinispan-bom:14.0.13.Final'
 
     // to use regexp in logback.xml
     implementation 'org.codehaus.janino:janino:3.1.6'
@@ -41,23 +40,23 @@ dependencies {
     runtimeOnly 'org.apache.httpcomponents:httpclient'
     runtimeOnly 'org.apache.httpcomponents:httpcore'
 
-    compileOnly libs.commonsLang3
-    compileOnly libs.commonsIO
-    compileOnly libs.lombok
+    compileOnly "org.apache.commons:commons-lang3"
+    compileOnly "commons-io:commons-io:2.6"
+    compileOnly "org.projectlombok:lombok"
     compileOnly 'com.google.code.findbugs:annotations:3.0.1u2'
 
-    testCompileOnly libs.jupiter
-    testCompileOnly libs.lombok
+    testCompileOnly "org.junit.jupiter:junit-jupiter:5.6.2"
+    testCompileOnly "org.projectlombok:lombok"
     testCompileOnly 'com.google.code.findbugs:annotations:3.0.1u2'
 
-    testRuntimeOnly libs.jupiterEngine
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.2"
     testRuntimeOnly 'com.h2database:h2:1.4.200'
 
-    testImplementation (libs.springStarterTest) {
+    testImplementation ('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
     testImplementation 'io.rest-assured:rest-assured'
-    testImplementation libs.sprintMockMvc
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'org.springframework.security:spring-security-test:5.5.1'
 }
