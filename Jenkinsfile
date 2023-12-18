@@ -13,6 +13,7 @@ pipeline {
               docker compose version
               curl --version
               jq --version
+              java --version
               docker compose ps
             '''
             }
