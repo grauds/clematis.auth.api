@@ -23,7 +23,7 @@ plugins {
 }
 
 group 'name.troshin.anton.clematis'
-version = '0.0.4'
+version = 'v1.0.0-beta.2'
 
 apply from: file("${project.rootDir}/dependencies.gradle")
 
