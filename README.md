@@ -22,7 +22,7 @@ Run the build and test the configuration attached. Please note, that the configu
 ```
 ./gradlew clean build
 ```
-o pack the application into a Docker container run the Docker build
+To pack the application into a Docker container run the Docker build
 ```
 docker build -t clematis.auth.api .
 ```
