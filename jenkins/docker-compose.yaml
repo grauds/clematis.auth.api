@@ -22,8 +22,7 @@ services:
       networks:
         - clematis_auth
       container_name: clematis-auth-mysql-db
-      image: library/mysql:8.0
-      mem_reservation: 1G
+      image: library/mysql:latest
       volumes:
         - /home/clematis/auth/storage:/var/lib/mysql
       env_file:
