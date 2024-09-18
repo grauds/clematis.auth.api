@@ -1,5 +1,6 @@
 # Clematis Authorization API
 [![Docker Image CI](https://github.com/grauds/clematis.auth.api/actions/workflows/docker-image.yml/badge.svg)](https://github.com/grauds/clematis.auth.api/actions/workflows/docker-image.yml)
+[![Docker](https://github.com/grauds/clematis.auth.api/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/grauds/clematis.auth.api/actions/workflows/docker-publish.yml)
 
 ## About
 
