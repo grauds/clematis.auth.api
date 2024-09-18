@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE module PUBLIC
-    "-//Puppy Crawl//DTD Check Configuration 1.2//EN"
-    "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+        "-//Puppy Crawl//DTD Check Configuration 1.2//EN"
+        "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
 
 <!--
 
@@ -25,43 +25,37 @@
 
 <module name="Checker">
 
-<!--     <module name="com.wiley.tools.checkstyle.FixedSuppressionFilter">
-        <property name="file" value="./tools/checkstyle/suppressions.xml"/>
-    </module> -->
-
-    <module name="SuppressionFilter">
-        <property name="file" value="${checkstyleSuppressionFile}" />
+    <module name="LineLength">
+        <property name="max" value="120"/>
     </module>
 
     <module name="SuppressWarningsFilter"/>
-
-    <module name="SuppressionCommentFilter">
-        <property name="offCommentFormat" value="CHECKSTYLE\:OFF(?:\s+(.+))"/>
-        <property name="onCommentFormat" value="CHECKSTYLE\:ON(?:\s+(.+))"/>
-        <property name="checkFormat" value="$1"/>
-    </module>
-
-    <!-- Checks duplicate code-->
-    <!-- Removed in v 6.2 -->
- <!--module name="StrictDuplicateCode"/-->
-
 
     <module name="FileLength">
         <property name="max" value="1500"/>
     </module>
 
-<module name="TreeWalker">
+    <module name="SuppressionFilter">
+        <property name="file" value="${checkstyleSuppressionFile}" />
+    </module>
+
+    <module name="TreeWalker">
+
         <module name="SuppressWarningsHolder" />
 
-        <module name="FileContentsHolder"/>
+        <module name="SuppressionCommentFilter">
+            <property name="offCommentFormat" value="CHECKSTYLE\:OFF(?:\s+(.+))"/>
+            <property name="onCommentFormat" value="CHECKSTYLE\:ON(?:\s+(.+))"/>
+            <property name="checkFormat" value="$1"/>
+        </module>
+
+        <!--module name="FileContentsHolder"/-->
 
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
         <module name="JavadocType">
             <property name="scope" value="public"/>
-            <property name="authorFormat" value="\S"/>
         </module>
-
 
         <!-- Checks for Naming Conventions.                  -->
         <!-- See http://checkstyle.sf.net/config_naming.html -->
@@ -79,25 +73,16 @@
 
         <module name="TypeName"/>
 
-
         <!-- Checks for Size Violations.                    -->
         <!-- See http://checkstyle.sf.net/config_sizes.html -->
 
-        <module name="LineLength">
-            <property name="max" value="120"/>
-        </module>
-
         <module name="MethodLength"/>
-
         <module name="ParameterNumber"/>
-
         <module name="AnonInnerLength">
-        <property name="max" value="40"/>
+            <property name="max" value="40"/>
         </module>
 
-
-
- 				<!-- Checks for whitespace                               -->
+        <!-- Checks for whitespace                               -->
         <!-- See http://checkstyle.sf.net/config_whitespace.html -->
 
         <module name="EmptyForIteratorPad"/>
@@ -106,12 +91,9 @@
         <module name="OperatorWrap"/>
         <module name="ParenPad"/>
         <module name="TypecastParenPad"/>
-
-       <module name="MethodParamPad"/>
-
+        <module name="MethodParamPad"/>
         <module name="WhitespaceAfter"/>
-
-         <module name="WhitespaceAround">
+        <module name="WhitespaceAround">
             <property name="tokens" value="ASSIGN,BAND,BAND_ASSIGN,BOR,BOR_ASSIGN,BSR,BSR_ASSIGN,BXOR,
             BXOR_ASSIGN,COLON,DIV,DIV_ASSIGN,EQUAL,GE,GT,LAND,LE,LITERAL_ASSERT,LITERAL_CATCH, LITERAL_DO,
             LITERAL_ELSE, LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF, LITERAL_RETURN, LITERAL_SYNCHRONIZED,
@@ -120,7 +102,7 @@
         </module>
 
 
-				<!-- Checks for imports                              -->
+        <!-- Checks for imports                              -->
         <!-- See http://checkstyle.sf.net/config_import.html -->
         <module name="IllegalImport"/>
         <module name="RedundantImport"/>
@@ -140,7 +122,8 @@
         <!-- See http://checkstyle.sf.net/config_blocks.html -->
         <module name="EmptyBlock">
             <property name="tokens"
-                      value="LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_IF, LITERAL_FOR, LITERAL_TRY, LITERAL_WHILE, INSTANCE_INIT, STATIC_INIT"/>
+                      value="LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_IF, LITERAL_FOR, LITERAL_TRY,
+                      LITERAL_WHILE, INSTANCE_INIT, STATIC_INIT"/>
         </module>
 
         <module name="LeftCurly">
@@ -171,18 +154,18 @@
         <module name="NestedTryDepth"/>
 
         <module name="ParameterAssignment"/>
-	      <module name="Regexp">
+        <module name="Regexp">
             <property name="format" value="System\.out\.print"/>
             <property name="message" value="bad practice of use System.out.print"/>
-             <property name="illegalPattern" value="true"/>
+            <property name="illegalPattern" value="true"/>
         </module>
-				<module name="Regexp">
+        <module name="Regexp">
             <property name="format" value="\.printStackTrace"/>
             <property name="message" value="bad practice of use printStackTrace"/>
-						 <property name="illegalPattern" value="true"/>
+            <property name="illegalPattern" value="true"/>
         </module>
 
-			<module name="Regexp">
+        <module name="Regexp">
             <property name="format" value="/s+$"/>
             <property name="message" value="Line has trailing spaces."/>
             <property name="illegalPattern" value="true"/>
@@ -190,35 +173,31 @@
 
         <module name="IllegalTokenText"/>
 
-
         <!-- Checks for class design                         -->
         <!-- See http://checkstyle.sf.net/config_design.html -->
-<!--    Not compatible with spring boot    <module name="HideUtilityClassConstructor"/>-->
+        <!--    Not compatible with spring boot    <module name="HideUtilityClassConstructor"/>-->
 
         <module name="CyclomaticComplexity">
             <property name="max" value="16"/>
         </module>
         <module name="ModifierOrder"/>
 
-    	<module name="RedundantModifier"/>
+        <module name="RedundantModifier"/>
 
-
-    	<module name="Indentation"/>
+        <module name="Indentation"/>
 
         <module name="TodoComment"/>
         <module name="UpperEll"/>
         <module name="ArrayTypeStyle"/>
-    <!-- Miscellaneous other checks.                   -->
+        <!-- Miscellaneous other checks.                   -->
         <!-- See http://checkstyle.sf.net/config_misc.html -->
 
         <module name="DeclarationOrder"/>
-
 
         <module name="InnerTypeLast"/>
         <module name="MultipleStringLiterals"/>
         <module name="SuperClone"/>
 
+    </module>
 </module>
-</module>
-
 

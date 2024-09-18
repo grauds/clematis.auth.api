@@ -9,9 +9,9 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
  * @author Anton Troshin
  */
 @SpringBootApplication(exclude = {
-        LiquibaseAutoConfiguration.class,
-        SecurityAutoConfiguration.class
-    }, proxyBeanMethods = false)
+    LiquibaseAutoConfiguration.class,
+    SecurityAutoConfiguration.class
+}, proxyBeanMethods = false)
 public class ClematisAuthorizationApp {
     public static void main(String[] args){
         SpringApplication.run(ClematisAuthorizationApp.class, args);

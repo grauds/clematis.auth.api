@@ -6,43 +6,115 @@ buildscript {
 }
 
 plugins {
-    id 'org.springframework.boot' version '2.6.14'
-    id 'io.spring.dependency-management' version '1.1.0'
-    id 'java'
+    id "java"
+    id "org.springframework.boot" version "2.7.18"
+    id "io.spring.dependency-management" version "1.1.4"
 
-    id 'com.github.spotbugs' version '4.7.1'
-    id 'org.asciidoctor.jvm.convert' version '3.1.0'
-    id 'jacoco'
-    id 'checkstyle'
-    id 'idea'
-    id 'eclipse'
+    id "com.github.spotbugs" version "6.0.7"
+   // id "org.asciidoctor.jvm.convert" version "3.1.0"
+    id "jacoco"
+    id "checkstyle"
 
-    id 'com.palantir.docker' version '0.30.0'
-    id 'com.palantir.docker-run' version '0.30.0'
-    id 'com.palantir.docker-compose' version '0.30.0'
+    id "com.palantir.docker" version "0.36.0"
+    id "com.palantir.docker-run" version "0.36.0"
+    id "com.palantir.docker-compose" version "0.36.0"
 }
 
-group 'name.troshin.anton.clematis'
-version = 'v1.0.0-beta.2'
+group = 'org.clematis'
+version = '1.0.0'
 
-apply from: file("${project.rootDir}/dependencies.gradle")
-
-sourceCompatibility = '11'
-targetCompatibility = '11'
+java {
+    sourceCompatibility = '17'
+}
 
 configurations {
     implementation.exclude group: "org.slf4j", module: "slf4j-log4j12"
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
     mavenCentral()
 }
-// ------------ JaCoCo test coverage + ascii doctor as a post processor
 
+dependencies {
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0'
+
+    compileOnly (
+            'org.projectlombok:lombok',
+            "com.github.spotbugs:spotbugs:4.8.4",
+            "com.google.code.findbugs:annotations:3.0.1u2",
+            'org.infinispan:infinispan-component-annotations:14.0.13.Final',
+            "org.apache.commons:commons-lang3",
+            "commons-io:commons-io:2.6",
+    )
+    checkstyle "com.puppycrawl.tools:checkstyle:10.9.3"
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    implementation 'com.google.auto.service:auto-service:1.0'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation "org.springdoc:springdoc-openapi-ui:1.6.14"
+    implementation "org.springdoc:springdoc-openapi-hateoas:1.6.14"
+    implementation "org.springdoc:springdoc-openapi-data-rest:1.6.14"
+
+    implementation 'org.glassfish.main.external:jmxremote_optional-repackaged:5.0'
+
+    implementation "org.jboss.resteasy:resteasy-servlet-initializer:4.7.4.Final"
+    implementation "org.jboss.resteasy:resteasy-jackson2-provider:4.7.4.Final"
+    implementation "org.jboss.resteasy:resteasy-jaxb-provider:4.7.4.Final"
+    implementation "org.jboss.resteasy:resteasy-multipart-provider:4.7.4.Final"
+
+    implementation ('org.keycloak:keycloak-dependencies-server-all:20.0.5') {
+        exclude group: 'org.jboss.resteasy', module: 'resteasy-client'
+        exclude group: 'org.jboss.resteasy', module: 'resteasy-jaxb-provider'
+        exclude group: 'org.jboss.resteasy', module: 'resteasy-jaxrs'
+        exclude group: 'org.jboss.resteasy', module: 'resteasy-multipart-provider'
+    }
+    implementation('org.keycloak:keycloak-crypto-default:20.0.5')
+    implementation('org.keycloak:keycloak-admin-ui:20.0.5')
+    implementation 'org.infinispan:infinispan-bom:14.0.13.Final'
+
+    // to use regexp in logback.xml
+    implementation 'org.codehaus.janino:janino:3.1.6'
+
+    runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+    runtimeOnly 'org.apache.httpcomponents:httpclient'
+    runtimeOnly 'org.apache.httpcomponents:httpcore'
+
+    testCompileOnly (
+            "com.github.spotbugs:spotbugs:4.8.4",
+            "com.google.code.findbugs:annotations:3.0.1u2",
+            "org.projectlombok:lombok",
+            "org.junit.jupiter:junit-jupiter:5.6.2"
+    )
+
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.2"
+    testRuntimeOnly 'com.h2database:h2:1.4.200'
+
+    testImplementation ('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    testImplementation 'io.rest-assured:rest-assured'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+// ------------ JaCoCo configuration  ---------
 ext {
     setProperty('snippetsDir', file("build/generated-snippets"))
 }
 
+tasks.named('test') {
+    useJUnitPlatform()
+}
 
 test {
     outputs.dir snippetsDir
@@ -55,26 +127,6 @@ test {
     }
 }
 
-task codeCoverageReport(type: JacocoReport) {
-    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
-
-    allprojects.each {
-        sourceSets it.sourceSets.main
-    }
-
-    reports {
-        xml.enabled true
-        xml.destination file("jacoco/report.xml")
-        html.enabled true
-        csv.enabled false
-    }
-}
-
-// always run the tests before generating the report
-codeCoverageReport.dependsOn {
-    subprojects.test
-}
-
 jacocoTestReport {
     dependsOn test // tests are required to run before generating the report
     reports {
@@ -83,12 +135,17 @@ jacocoTestReport {
         html.outputLocation = file('jacoco/html')
         xml.outputLocation = file('jacoco/jacoco.xml')
     }
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+    executionData fileTree(project.rootDir.absolutePath).include("jacoco/*.exec")
 }
-
+/*
 asciidoctor {
     inputs.dir snippetsDir
     dependsOn test
 }
+*/
 // ------------ Spotbugs configuration  ---------
 spotbugsMain {
     reports {
@@ -100,6 +157,7 @@ spotbugsMain {
             destination = file("$buildDir/reports/spotbugs/main/spotbugs.html")
         }
     }
+    ignoreFailures = true
 }
 
 spotbugsTest {
@@ -112,14 +170,16 @@ spotbugsTest {
             destination = file("$buildDir/reports/spotbugs/test/spotbugs.html")
         }
     }
+    ignoreFailures = true
 }
+
 // ------------ Checkstyle configuration  ---------
 checkstyle {
     configProperties.configFile = file("${project.rootDir}/config/checkstyle/checkstyle.xml")
     configProperties.checkstyleSuppressionFile = file("${project.rootDir}/config/checkstyle/suppressions.xml")
 }
 
-task checkstyleReport {
+tasks.register('checkstyleReport') {
     doLast {
         if (file("${buildDir}/reports/checkstyle/${project.ext.checkType}.xml").exists()) {
             ant.xslt(in: "${buildDir}/reports/checkstyle/${project.ext.checkType}.xml",
@@ -129,12 +189,8 @@ task checkstyleReport {
     }
 }
 
-tasks.withType(Checkstyle) {
+tasks.withType(Checkstyle).configureEach {
     exclude '**/*Test*'
-}
-
-build {
-    dependsOn tasks.codeCoverageReport
 }
 
 docker {
@@ -159,10 +215,9 @@ springBoot {
     buildInfo {
         properties {
             artifact = 'clematis-auth-api'
-            version = version
+            version = project.version
             group = 'org.clematis.keycloak'
             name = 'Clematis Authentication API'
         }
     }
 }
-

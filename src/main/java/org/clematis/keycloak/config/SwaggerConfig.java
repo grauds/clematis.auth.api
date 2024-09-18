@@ -1,7 +1,6 @@
 package org.clematis.keycloak.config;
 
 import static org.springdoc.core.Constants.ALL_PATTERN;
-
 import org.springdoc.core.GroupedOpenApi;
 import org.springdoc.core.customizers.OpenApiCustomiser;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
