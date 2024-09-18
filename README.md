@@ -1,7 +1,5 @@
 # Clematis Authorization API
-[![CI to Docker Hub](https://github.com/grauds/clematis.auth.api/actions/workflows/CI_to_Docker_Hub.yml/badge.svg)](https://github.com/grauds/clematis.auth.api/actions/workflows/CI_to_Docker_Hub.yml)
-
-Keycloak as a bean in Spring Boot environment
+[![Docker Image CI](https://github.com/grauds/clematis.auth.api/actions/workflows/docker-image.yml/badge.svg)](https://github.com/grauds/clematis.auth.api/actions/workflows/docker-image.yml)
 
 ## About
 
