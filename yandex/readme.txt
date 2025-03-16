@@ -1,1 +1,0 @@
-Add Yandex Cloud specific configuration here

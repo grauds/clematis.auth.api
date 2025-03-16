@@ -9,11 +9,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-/**
- * @author Ruslan Lagay
- */
 @Configuration
-public class CorsConfig {
+public class SpringWebCorsConfig {
 
     public static final String ALL_REGEXP = "/**";
     public static final String ORIGINS = "*";
